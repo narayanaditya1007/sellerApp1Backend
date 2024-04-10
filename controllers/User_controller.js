@@ -62,7 +62,8 @@ async function login(req,res){
         console.log("yha tak to ho gya");
         res.cookie("jwtToken",token,{
             httpOnly: true
-        }).send({user,token});
+        }).send({user,token})
+        console.log("coookiee",token);
 
     }
     catch(err){
@@ -83,7 +84,7 @@ async function getMydetails(req,res){
 
 async function updateDetails(req,res){
     try{
-        const user = await User.findOne({email: req.body.email});
+        const user = await User.findById(req.body.UserId);
         user.phone = req.body.phone || user.phone;
         user.address = req.body.address || user.address;
         user.save();
