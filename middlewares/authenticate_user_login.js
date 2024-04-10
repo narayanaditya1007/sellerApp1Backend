@@ -6,7 +6,7 @@ require('dotenv').config();
 const authenticateUser = async (req,res,next)=>{
     try{
         const token = req.cookies.jwtToken;
-        console.log(token);
+        console.log("kkk",token,req);
         const decoded = jwt.verify(token,process.env.SECRET_KEY);
         console.log(decoded)
         const user = await User.findOne({email: decoded.email});

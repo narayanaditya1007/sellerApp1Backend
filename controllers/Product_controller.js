@@ -16,6 +16,7 @@ const getListedProducts = async(req,res)=>{
     try{
         console.log("it came here");
         const allListedProduct = await Products.find({seller_id: req.body.UserId});
+        console.log("kkk", req.body.UserId)
         res.send(allListedProduct);
     }
     catch(err){
@@ -56,6 +57,16 @@ const updateProduct = async(req,res)=>{
         console.log(err);
     }
 }
+
+const getDetail = async(req,res)=>{
+    try{
+        const proudct = await Products.findById(req.params.productId);
+        res.send(proudct);
+    }
+    catch(err){
+        console.log(err);
+    }
+}
   
 
 
@@ -64,4 +75,5 @@ module.exports={
     getListedProducts,
     addProduct,
     updateProduct,
+    getDetail
 }

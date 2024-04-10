@@ -17,8 +17,8 @@ const placeOrder = async(req,res)=>{
                 address: req.body.address,
             },
             product_id: req.body.productId,
+            exp_delivery_date:`${year}-${month}-${day+5}` ,
             seller_id: product.seller_id,
-            exp_delivery_date:`${day+5}-${month}-${year}` ,
             status: "placed"
         })
         product.quantity = product.quantity - 1;
@@ -37,7 +37,21 @@ const getAllItemforSeller = async(req,res)=>{
         const allItemofSeller= await OrderItem.find({seller_id: req.body.UserId});
         console.log(allItemofSeller);
         // allItemofSeller.sort((order1,order2)=>{return order1.exp_delivery_date<order2.exp_delivery_date});
-        res.send(allItemofSeller);
+        let orderWithDetail =await  Promise.all(allItemofSeller.map(async (order)=>{
+            
+            // console.log(orderdetail);
+            const productDetail = await Product.findById(order.product_id);
+            // console.log(productDetail);
+            let orderdetail={
+                order: order,
+                productDetail: productDetail
+            }
+            // console.log(orderdetail);
+            return orderdetail
+        }))
+        // await Promise.all(orderWithDetail)
+        console.log(orderWithDetail);
+        res.send(orderWithDetail);
     }
     catch(err){
         console.log(err);

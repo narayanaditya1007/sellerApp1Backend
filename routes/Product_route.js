@@ -23,7 +23,13 @@ Router.post('/product/',authenticate_login,Product_controller.addProduct);
 Router.put('/product/',authenticate_login,authorize_seller,Product_controller.updateProduct);
 
 
+// get particular product details
+Router.get('/product/:productId',Product_controller.getDetail)
+
+
 
 
 module.exports= Router;
+
+// you can have keyboard
 
