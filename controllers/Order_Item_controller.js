@@ -9,6 +9,7 @@ const placeOrder = async(req,res)=>{
         let day = date.getDate();
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
+        const product =await Product.findById(req.body.productId);
         const orderItem = new OrderItem({
             buyer_details:{
                 name: req.body.name,
@@ -16,11 +17,10 @@ const placeOrder = async(req,res)=>{
                 address: req.body.address,
             },
             product_id: req.body.productId,
-            seller_id: req.body.sellerId,
+            seller_id: product.seller_id,
             exp_delivery_date:`${day+5}-${month}-${year}` ,
             status: "placed"
         })
-        const product = await Product.findById(req.body.productId);
         product.quantity = product.quantity - 1;
         orderItem.save();
         product.save();

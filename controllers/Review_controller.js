@@ -3,7 +3,7 @@ const Reviews = require('../models/Reviews');
 
 const getAllReviews = async(req,res)=>{
     try{
-        const allReviews = await Reviews.find({product_id:req.body.productId});
+        const allReviews = await Reviews.find({product_id:req.params.productId});
         res.send(allReviews);
     }
     catch(err){
@@ -19,7 +19,7 @@ const addReview = async(req,res)=>{
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
         const review = new Reviews({
-            user_id: req.body.UserId,
+            user_name: req.body.userName,
             product_id: req.body.productId,
             rating: req.body.rating,
             review: req.body.review,
