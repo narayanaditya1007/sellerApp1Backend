@@ -7,7 +7,7 @@ const Router = express.Router();
 
 
 // search products --buyer
-Router.get('/product/',Product_controller.searchProduct);
+Router.get('/product',Product_controller.searchProduct);
 
  
 

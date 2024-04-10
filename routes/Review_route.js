@@ -6,7 +6,7 @@ const Router = express.Router();
 
 
 //get all review for product
-Router.get('/review',review_controller.getAllReviews);
+Router.get('/review/:productId',review_controller.getAllReviews);
 
 
 // add review
