@@ -77,6 +77,15 @@ async function login(req,res){
     }
 }
 
+async function logout(req,res){
+    try{
+        res.clearCookie('jwtToken').send("Logout Done")
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 async function getMydetails(req,res){
     try{
         const user =await User.findById(req.body.UserId);
@@ -144,6 +153,7 @@ async function getAllSellers(req,res){
 module.exports = {
     signup,
     login,
+    logout,
     updateDetails,
     approveSeller,
     getMydetails,
