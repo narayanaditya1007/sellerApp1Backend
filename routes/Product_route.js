@@ -2,12 +2,13 @@ const express = require('express');
 const authenticate_login = require('../middlewares/authenticate_user_login');
 const authorize_seller = require('../middlewares/authorize_product_seller');
 const Product_controller = require('../controllers/Product_controller');
+const authenticateGateway = require('../middlewares/authenticate_gateways')
 
 const Router = express.Router();
 
 
 // search products --buyer
-Router.get('/product',Product_controller.searchProduct);
+Router.get('/product',authenticateGateway,Product_controller.searchProduct);
 
  
 
@@ -24,7 +25,7 @@ Router.put('/product/',authenticate_login,authorize_seller,Product_controller.up
 
 
 // get particular product details
-Router.get('/product/:productId',Product_controller.getDetail)
+Router.get('/product/:productId',authenticateGateway,Product_controller.getDetail)
 
 
 
