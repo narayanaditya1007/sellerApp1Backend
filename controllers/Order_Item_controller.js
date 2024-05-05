@@ -91,9 +91,32 @@ const cancelOrder = async(req,res)=>{
     }
 }
 
+const getOrderDetail = async(req,res)=>{
+    try{
+        console.log(req.params.orderId);
+        const order =await OrderItem.findById(req.params.orderId);
+        const product =await Product.findById(order.product_id);
+        let toSend = {
+            name: product.name,
+            price : product.price,
+            images: product.images,
+            desc: product.description,
+            expDeliveryDate: order.exp_delivery_date,
+            status: order.status,
+            orderId: req.params.orderId
+        }
+        res.send(toSend);
+    }
+    catch(err){
+        console.log(err);
+    }
+
+}
+
 module.exports={
     placeOrder,
     getAllItemforSeller,
     updateStatus,
+    getOrderDetail,
     cancelOrder
 }
