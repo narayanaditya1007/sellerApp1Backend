@@ -9,6 +9,11 @@ const placeOrder = async(req,res)=>{
         let day = date.getDate();
         let month = date.getMonth() + 1;
         let year = date.getFullYear();
+        let expDeliveryDate = `${year}-${month}-${day+5}`;
+        if((month < 10) && (day<10)) expDeliveryDate = `${year}-0${month}-0${day+5}`;
+        else if(month < 10) expDeliveryDate = `${year}-0${month}-${day+5}`;
+        else if(day < 10) expDeliveryDate = `${year}-${month}-0${day+5}`;
+
         const product =await Product.findById(req.body.productId);
         const orderItem = new OrderItem({
             buyer_details:{
@@ -17,7 +22,7 @@ const placeOrder = async(req,res)=>{
                 address: req.body.address,
             },
             product_id: req.body.productId,
-            exp_delivery_date:`${year}-${month}-${day+5}` ,
+            exp_delivery_date: expDeliveryDate,
             seller_id: product.seller_id,
             status: "placed"
         })
@@ -29,28 +34,6 @@ const placeOrder = async(req,res)=>{
     catch(err){
         console.log(err);
     }
-}
-
-const getOrderDetail = async(req,res)=>{
-    try{
-        console.log(req.params.orderId);
-        const order =await OrderItem.findById(req.params.orderId);
-        const product =await Product.findById(order.product_id);
-        let toSend = {
-            name: product.name,
-            price : product.price,
-            images: product.images,
-            desc: product.description,
-            expDeliveryDate: order.exp_delivery_date,
-            status: order.status,
-            orderId: req.params.orderId
-        }
-        res.send(toSend);
-    }
-    catch(err){
-        console.log(err);
-    }
-    
 }
 
 const getAllItemforSeller = async(req,res)=>{
@@ -96,6 +79,7 @@ const updateStatus = async(req,res)=>{
 
 const cancelOrder = async(req,res)=>{
     try{
+        console.log(req.body.itemId);
         const curItem = await OrderItem.findById(req.body.itemId);
         curItem.status = "cancel";
         curItem.exp_delivery_date = null;
@@ -107,10 +91,32 @@ const cancelOrder = async(req,res)=>{
     }
 }
 
+const getOrderDetail = async(req,res)=>{
+    try{
+        console.log(req.params.orderId);
+        const order =await OrderItem.findById(req.params.orderId);
+        const product =await Product.findById(order.product_id);
+        let toSend = {
+            name: product.name,
+            price : product.price,
+            images: product.images,
+            desc: product.description,
+            expDeliveryDate: order.exp_delivery_date,
+            status: order.status,
+            orderId: req.params.orderId
+        }
+        res.send(toSend);
+    }
+    catch(err){
+        console.log(err);
+    }
+
+}
+
 module.exports={
     placeOrder,
-    getOrderDetail,
     getAllItemforSeller,
     updateStatus,
+    getOrderDetail,
     cancelOrder
 }

@@ -21,7 +21,7 @@ async function signup(req,res){
             password: hashPass,
             phone: req.body.phone,
             user_type: "seller",
-            is_approved: false,
+            is_approved: undefined, 
             address:{
                 locality:req.body.address.locality,
                 city: req.body.address.city,
@@ -43,6 +43,7 @@ async function signup(req,res){
 async function login(req,res){
     try{
         console.log("i reached login")
+        console.log(req.body.email);
         const user=await User.findOne({email: req.body.email});
         console.log(user)
         if(!user){
@@ -125,6 +126,7 @@ async function approveSeller(req,res){
 async function removeSeller(req,res){
     try{
         const user = await User.findById(req.body.sellerId);
+        // console.log(user);
         user.is_approved = false;
         user.save();
         res.send(user)
@@ -136,12 +138,11 @@ async function removeSeller(req,res){
 
 async function getAllSellers(req,res){
     try{
-        const allSeller = await User.find({user_type: "seller"});
-        allSeller.sort((seller1,seller2)=>{
-            if(seller1.is_approved)return false;
-            return true;
+        const allSeller = await User.find({user_type: "seller",});
+        pendingSeller = allSeller.filter((seller)=>{
+            if(seller.is_approved === undefined || seller.is_approved===true)return true;
         })
-        res.send(allSeller);
+        res.send(pendingSeller);
     }
     catch(err){
         console.log(err);
