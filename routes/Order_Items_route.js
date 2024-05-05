@@ -9,11 +9,12 @@ const Router = express.Router();
 // place order
 Router.post('/order/placeOrder',authenticateGateway,Order_item_controller.placeOrder)
 
+// get all ordered items --seller
+Router.get('/orderItem/seller',authenticate_login,Order_item_controller.getAllItemforSeller) 
+
 // get order detail by orderId
 Router.get('/order/:orderId',authenticateGateway,Order_item_controller.getOrderDetail)
 
-// get all ordered items --seller
-Router.get('/order/seller',authenticate_login,Order_item_controller.getAllItemforSeller)
 
 
 // update delivery status --seller
