@@ -21,11 +21,6 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({
-    source: '*',
-    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"],
-    credentials: true
-}))
 app.use(userRouter);
 app.use(orderItemRouter);
 app.use(productRouter);
