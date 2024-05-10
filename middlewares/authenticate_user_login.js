@@ -1,17 +1,17 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebjwtToken');
 const User = require('../models/Users');
 require('dotenv').config();
 
 
 const authenticateUser = async (req,res,next)=>{
     try{
-        const token = req.cookies.jwtToken;
-        console.log("token",token)
-        if(!token){
+        const {jwtToken} = req.cookies;
+        console.log("jwtToken",jwtToken)
+        if(!jwtToken){
             return res.send({message:"please login"})
         }
-        console.log("kkk",token,req);
-        const decoded = jwt.verify(token,process.env.SECRET_KEY);
+        console.log("kkk",jwtToken,req);
+        const decoded = jwt.verify(jwtToken,process.env.SECRET_KEY);
         console.log(decoded)
         const user = await User.findOne({email: decoded.email});
         console.log(user);
