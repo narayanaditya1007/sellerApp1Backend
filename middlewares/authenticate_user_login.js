@@ -7,8 +7,7 @@ const authenticateUser = async (req,res,next)=>{
     try{
         const token = req.cookies.jwtToken;
         if(!token){
-            res.send("please login")
-            throw new Error("not login")
+            return res.send({message:"please login"})
         }
         console.log("kkk",token,req);
         const decoded = jwt.verify(token,process.env.SECRET_KEY);
