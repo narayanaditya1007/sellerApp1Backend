@@ -6,6 +6,7 @@ require('dotenv').config();
 const authenticateUser = async (req,res,next)=>{
     try{
         const token = req.cookies.jwtToken;
+        console.log("token",token)
         if(!token){
             return res.send({message:"please login"})
         }
