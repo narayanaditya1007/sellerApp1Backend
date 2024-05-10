@@ -8,24 +8,24 @@ const Router = express.Router();
 
 
 // search products --buyer
-Router.get('/product',authenticateGateway,Product_controller.searchProduct);
+Router.get('product',authenticateGateway,Product_controller.searchProduct);
 
  
 
 // get products listed by a seller
-Router.get('/product/seller',authenticate_login,Product_controller.getListedProducts)
+Router.get('product/seller',authenticate_login,Product_controller.getListedProducts)
 
 
 // add new product
-Router.post('/product/',authenticate_login,Product_controller.addProduct);
+Router.post('product/',authenticate_login,Product_controller.addProduct);
 
 
 // update product 
-Router.put('/product/',authenticate_login,authorize_seller,Product_controller.updateProduct);
+Router.put('product/',authenticate_login,authorize_seller,Product_controller.updateProduct);
 
 
 // get particular product details
-Router.get('/product/:productId',authenticateGateway,Product_controller.getDetail)
+Router.get('product/:productId',authenticateGateway,Product_controller.getDetail)
 
 
 
