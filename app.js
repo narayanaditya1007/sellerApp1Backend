@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URI);
 const app=express();
 const PORT = process.env.PORT || 3000;
 app.use(cors({
-    origin: ["https://seller-app1-frontend.vercel.app/"],
+    origin: ["https://seller-app1-frontend.vercel.app"],
     credentials: true
 }))
 
