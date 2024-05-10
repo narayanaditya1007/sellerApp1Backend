@@ -56,7 +56,7 @@ const getAllItemforSeller = async(req,res)=>{
         }))
         // await Promise.all(orderWithDetail)
         console.log(orderWithDetail);
-        res.send(orderWithDetail);
+        return res.send(orderWithDetail);
     }
     catch(err){
         console.log(err);
