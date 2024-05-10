@@ -68,7 +68,9 @@ async function login(req,res){
         const token = jwt.sign({email: user.email},process.env.SECRET_KEY);
         console.log("yha tak to ho gya");
         return res.cookie("jwtToken",token,{
-            httpOnly: true
+            httpOnly: true,
+            sameSite: 'none', // For cross-site requests
+            secure: true, // If you're using HTTPS
         }).send({user,token})
         console.log("coookiee",token);
 
